@@ -1,4 +1,9 @@
+import os
+import requests
 import yfinance as yf
+
+BOT_TOKEN = os.getenv("BOT_TOKEN")
+CHAT_ID = os.getenv("CHAT_ID")
 
 stocks = [
     "RELIANCE.NS",
@@ -8,8 +13,7 @@ stocks = [
     "SBIN.NS"
 ]
 
-print("Weekly High/Low Scanner")
-print("-" * 30)
+message = "📈 Weekly High/Low Scanner\n\n"
 
 for stock in stocks:
     try:
@@ -20,13 +24,19 @@ for stock in stocks:
         prev_low = df["Low"][:-1].min()
 
         if last_close > prev_high:
-            print(f"🚀 {stock} Weekly HIGH Breakout")
-
+            message += f"✅ {stock} Weekly HIGH Breakout\n"
         elif last_close < prev_low:
-            print(f"🔻 {stock} Weekly LOW Breakdown")
-
-        else:
-            print(f"➖ {stock} No Breakout")
+            message += f"🔻 {stock} Weekly LOW Breakdown\n"
 
     except Exception as e:
-        print(stock, e)
+        print(e)
+
+if message == "📈 Weekly High/Low Scanner\n\n":
+    message += "No breakout found."
+
+url = f"https://api.telegram.org/bot{BOT_TOKEN}/sendMessage"
+
+requests.post(url, data={
+    "chat_id": CHAT_ID,
+    "text": message
+})
