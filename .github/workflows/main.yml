@@ -2,7 +2,7 @@ name: NSE FO Scanner
 
 on:
   schedule:
-    - cron: "*/5 4-10 * * 1-5"   # हर 5 मिनट (IST मार्केट समय के अनुसार)
+    cron: "*/5 4-10 * * 1-5"
   workflow_dispatch:
 
 jobs:
