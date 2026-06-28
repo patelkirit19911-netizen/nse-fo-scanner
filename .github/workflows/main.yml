@@ -2,7 +2,7 @@ name: NSE FO Scanner
 
 on:
   schedule:
-    - cron: "*/15 4-10 * * 1-5"
+    - cron: "*/5 4-10 * * 1-5"   # हर 5 मिनट (IST मार्केट समय के अनुसार)
   workflow_dispatch:
 
 jobs:
@@ -11,13 +11,20 @@ jobs:
 
     steps:
       - uses: actions/checkout@v4
+
       - uses: actions/setup-python@v5
         with:
           python-version: "3.11"
+
       - name: Install dependencies
-        run: pip install -r requirements.txt
+        run: |
+          pip install -r requirements.txt
+
       - name: Run Scanner
         env:
           BOT_TOKEN: ${{ secrets.BOT_TOKEN }}
           CHAT_ID: ${{ secrets.CHAT_ID }}
+          DHAN_CLIENT_ID: ${{ secrets.DHAN_CLIENT_ID }}
+          DHAN_ACCESS_TOKEN: ${{ secrets.DHAN_ACCESS_TOKEN }}
+          DHAN_API_KEY: ${{ secrets.DHAN_API_KEY }}
         run: python scanner.py
