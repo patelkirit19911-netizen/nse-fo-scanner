@@ -18,8 +18,7 @@ CHAT_ID = os.getenv("CHAT_ID")
 CLIENT_ID = os.getenv("DHAN_CLIENT_ID")
 ACCESS_TOKEN = os.getenv("DHAN_ACCESS_TOKEN")
 
-dhan = dhanhq(CLIENT_ID, ACCESS_TOKEN)
-
+dhan = dhanhq(CLIENT_ID)
 # ===========================
 # Telegram
 # ===========================
